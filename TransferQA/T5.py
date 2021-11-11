@@ -323,13 +323,9 @@ def fine_tune(args, *more):
                     gradient_clip_val=args["max_norm"],
                     max_epochs=args["n_epochs"],
                     callbacks=[pl.callbacks.EarlyStopping(monitor='val_loss',min_delta=0.00, patience=15,verbose=False, mode='min')],
-                    #gpus=args["GPU"],
                     deterministic=True,
-                    gpus=2,
                     num_nodes=1,
                     # precision=16,
-                    accelerator="ddp",
-                    plugins='ddp_sharded'
                     )
 
     trainer.fit(task, train_loader, val_loader)
