@@ -32,7 +32,7 @@ class DST_Seq2Seq(pl.LightningModule):
 
         (loss), *_ = self.model(input_ids=batch["encoder_input"],
                             attention_mask=batch["attention_mask"],
-                            lm_labels=batch["decoder_output"]
+                            labels=batch["decoder_output"]
                             )
 
         # result = pl.TrainResult(loss)
@@ -44,7 +44,7 @@ class DST_Seq2Seq(pl.LightningModule):
         self.model.eval()
         (loss), *_ = self.model(input_ids=batch["encoder_input"],
                             attention_mask=batch["attention_mask"],
-                            lm_labels=batch["decoder_output"]
+                            labels=batch["decoder_output"]
                             )
 
 
