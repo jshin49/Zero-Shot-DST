@@ -317,7 +317,11 @@ def fine_tune(args, *more):
 
     task = DST_Seq2Seq(args, tokenizer, model)
     train_loader, val_loader, test_loader, ALL_SLOTS, domain_data = prepare_data(args, tokenizer)
-
+    
+    if not os.path.exists("logs"):
+        os.mkdir("logs")
+    if not os.path.exists(f"logs/{args['only_domain']}_{args['fewshot']}"):
+        os.mkdir(f"logs/{args['only_domain']}_{args['fewshot']}")
     log_path = f"logs/{args['only_domain']}_{args['fewshot']}/seed_{args['seed']}"
     if not os.path.exists(log_path):
         os.mkdir(log_path)
