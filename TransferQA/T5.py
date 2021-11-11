@@ -30,25 +30,25 @@ class DST_Seq2Seq(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         self.model.train()
 
-        (loss), *_ = self.model(input_ids=batch["encoder_input"],
+        outputs = self.model(input_ids=batch["encoder_input"],
                             attention_mask=batch["attention_mask"],
                             labels=batch["decoder_output"]
                             )
 
         # result = pl.TrainResult(loss)
         # result.log('train_loss', loss, on_epoch=True)
-        return {'loss': loss, 'log': {'train_loss': loss.item()}}
+        return {'loss': outputs.loss, 'log': {'train_loss': outputs.loss.item()}}
         # return result
 
     def validation_step(self, batch, batch_idx):
         self.model.eval()
-        (loss), *_ = self.model(input_ids=batch["encoder_input"],
+        outputs = self.model(input_ids=batch["encoder_input"],
                             attention_mask=batch["attention_mask"],
                             labels=batch["decoder_output"]
                             )
 
 
-        return {'val_loss': loss.item(), 'log': {'val_loss': loss.item()}}
+        return {'val_loss': outputs.loss.item(), 'log': {'val_loss': outputs.loss.item()}}
         # return result
 
     def validation_epoch_end(self, outputs):
