@@ -37,7 +37,7 @@ class DST_Seq2Seq(pl.LightningModule):
 
         # result = pl.TrainResult(loss)
         # result.log('train_loss', loss, on_epoch=True)
-        return {'loss': outputs.loss, 'log': {'train_loss': outputs.loss.item()}}
+        return {'loss': outputs.loss}#, 'log': {'train_loss': outputs.loss.item()}}
         # return result
 
     def validation_step(self, batch, batch_idx):
@@ -48,14 +48,15 @@ class DST_Seq2Seq(pl.LightningModule):
                             )
 
 
-        return {'val_loss': outputs.loss.item(), 'log': {'val_loss': outputs.loss.item()}}
+        return {'val_loss': outputs.loss.item()}#, 'log': {'val_loss': outputs.loss.item()}}
         # return result
 
     def validation_epoch_end(self, outputs):
         val_loss_mean = sum([o['val_loss'] for o in outputs]) / len(outputs)
         # show val_loss in progress bar but only log val_loss
-        results = {'progress_bar': {'val_loss': val_loss_mean}, 'log': {'val_loss': val_loss_mean},
-                   'val_loss': val_loss_mean}
+        results = {'val_loss': val_loss_mean}
+        self.log_dict(results)
+        print(results)
         return results
 
     def configure_optimizers(self):
