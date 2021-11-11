@@ -50,10 +50,10 @@ def evaluate_metrics(all_prediction, SLOT_LIST):
         for k, cv in dial["turns"].items():
             if set(cv["turn_belief"]) == set(cv["pred_belief"]):
                 joint_acc += 1
-            else:
-                print(cv["turn_belief"])
-                print(cv["pred_belief"])
-                print("==================")
+            # else:
+            #     print(cv["turn_belief"])
+            #     print(cv["pred_belief"])
+            #     print("==================")
             total += 1
 
             # Compute prediction slot accuracy
