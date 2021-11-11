@@ -122,8 +122,8 @@ def evaluate_model(args, tokenizer, model, test_loader, save_path, ALL_SLOTS, pr
     # active_slot_collection = {}
     # to gpu
     # gpu = args["GPU"][0]
-    # device = torch.device("cuda:0")
-    # model.to(device)
+    device = torch.device("cuda:0")
+    model.to(device)
     model.eval()
     if args["canonicalization"]:
         if args["version"]=="2.0":
@@ -136,8 +136,8 @@ def evaluate_model(args, tokenizer, model, test_loader, save_path, ALL_SLOTS, pr
     slot_logger["slot_gate"] = [0,0,0]
 
     for batch in tqdm(test_loader):
-        dst_outputs = model.generate(input_ids=batch["encoder_input"],#.to(device),
-                                attention_mask=batch["attention_mask"],#.to(device),
+        dst_outputs = model.generate(input_ids=batch["encoder_input"].to(model.device),
+                                attention_mask=batch["attention_mask"].to(model.device),
                                 eos_token_id=tokenizer.eos_token_id,
                                 max_length=200,
                                 )
