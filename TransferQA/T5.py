@@ -37,7 +37,7 @@ class DST_Seq2Seq(pl.LightningModule):
 
         # result = pl.TrainResult(loss)
         # result.log('train_loss', loss, on_epoch=True)
-        return {'loss': loss, 'log': {'train_loss': loss}}
+        return {'loss': loss, 'log': {'train_loss': loss.item()}}
         # return result
 
     def validation_step(self, batch, batch_idx):
@@ -48,7 +48,7 @@ class DST_Seq2Seq(pl.LightningModule):
                             )
 
 
-        return {'val_loss': loss, 'log': {'val_loss': loss}}
+        return {'val_loss': loss.item(), 'log': {'val_loss': loss.item()}}
         # return result
 
     def validation_epoch_end(self, outputs):
