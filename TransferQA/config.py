@@ -33,6 +33,7 @@ def get_args():
     parser.add_argument("--version", type=str, default="2.1" , help="version of multiwoz")
     parser.add_argument("--neg_num", type=float, default=0.3, help="negative samples for qa training")
     parser.add_argument("--neg_context_ratio", type=float, default=0, help="negative context for qa training")
+    parser.add_argument("--do_test_only", action='store_true')
     args = parser.parse_args()
     # args.GPU = [int(gpu) for gpu in args.GPU]
     return args
