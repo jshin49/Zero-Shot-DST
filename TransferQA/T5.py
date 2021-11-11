@@ -349,22 +349,22 @@ def fine_tune(args, *more):
         # precision=16,
     )
 
-    if not args["do_test_only"]:
-        trainer.fit(task, train_loader, val_loader)
+    # if not args["do_test_only"]:
+    trainer.fit(task, train_loader, val_loader)
 
     print("test start...")
-    if args["do_test_only"]:
-        ckpts = [_ckpt for _ckpt in os.listdir(log_path) if ".ckpt" in _ckpt]
-        assert len(ckpts) == 1
-        ckpt = ckpts[0]
-        print("load pretrained model from: ", os.path.join(log_path, ckpt))
-        ckpt_path = os.path.join(log_path, ckpt)
-        task = DST_Seq2Seq.load_from_checkpoint(
-            checkpoint_path=ckpt_path,
-            args=args,
-            tokenizer=tokenizer,
-            model=model,
-        )
+    # if args["do_test_only"]:
+    #     ckpts = [_ckpt for _ckpt in os.listdir(log_path) if ".ckpt" in _ckpt]
+    #     assert len(ckpts) == 1
+    #     ckpt = ckpts[0]
+    #     print("load pretrained model from: ", os.path.join(log_path, ckpt))
+    #     ckpt_path = os.path.join(log_path, ckpt)
+    #     task = DST_Seq2Seq.load_from_checkpoint(
+    #         checkpoint_path=ckpt_path,
+    #         args=args,
+    #         tokenizer=tokenizer,
+    #         model=model,
+    #     )
     #evaluate model
     ratio = "ratio_" + str(args["fewshot"]) + "_seed_" + str(args["seed"]) + "_domain_" + args["only_domain"]
     _ = evaluate_model(args, task.tokenizer, task.model, test_loader, args["model_checkpoint"], ALL_SLOTS, prefix=ratio)
