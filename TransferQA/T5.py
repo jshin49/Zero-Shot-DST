@@ -317,16 +317,31 @@ def fine_tune(args, *more):
     task = DST_Seq2Seq(args, tokenizer, model)
     train_loader, val_loader, test_loader, ALL_SLOTS, domain_data = prepare_data(args, tokenizer)
 
+    earlystopping_callback = pl.callbacks.EarlyStopping(
+        monitor="val_loss",
+        min_delta=0.00,
+        patience=15,
+        verbose=False,
+        mode="min",
+    )
+    checkpoint_callback = pl.callbacks.ModelCheckpoint(
+        dirpath=f"logs/{args['only_domain']}_{args['fewshot']}",
+        filename="{val_loss:.3f}",
+        save_top_k=1,
+        monitor="val_loss",
+        mode="min",
+    )
+    callbacks = [earlystopping_callback, checkpoint_callback]
+
     trainer = Trainer(
-                    default_root_dir=args["model_checkpoint"],
-                    accumulate_grad_batches=args["gradient_accumulation_steps"],
-                    gradient_clip_val=args["max_norm"],
-                    max_epochs=args["n_epochs"],
-                    callbacks=[pl.callbacks.EarlyStopping(monitor='val_loss',min_delta=0.00, patience=15,verbose=False, mode='min')],
-                    deterministic=True,
-                    num_nodes=1,
-                    # precision=16,
-                    )
+        accumulate_grad_batches=args["gradient_accumulation_steps"],
+        gradient_clip_val=args["max_norm"],
+        max_epochs=args["n_epochs"],
+        callbacks=callbacks,
+        # [pl.callbacks.EarlyStopping(monitor='val_loss',min_delta=0.00, patience=15,verbose=False, mode='min')],
+        deterministic=True,
+        # precision=16,
+    )
 
     trainer.fit(task, train_loader, val_loader)
 
