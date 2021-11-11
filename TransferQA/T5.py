@@ -318,6 +318,10 @@ def fine_tune(args, *more):
     task = DST_Seq2Seq(args, tokenizer, model)
     train_loader, val_loader, test_loader, ALL_SLOTS, domain_data = prepare_data(args, tokenizer)
 
+    log_path = f"logs/{args['only_domain']}_{args['fewshot']}/seed_{args['seed']}"
+    if not os.path.isdir(log_path):
+        os.mkdir(log_path)
+
     earlystopping_callback = pl.callbacks.EarlyStopping(
         monitor="val_loss",
         min_delta=0.00,
@@ -326,7 +330,7 @@ def fine_tune(args, *more):
         mode="min",
     )
     checkpoint_callback = pl.callbacks.ModelCheckpoint(
-        dirpath=f"logs/{args['only_domain']}_{args['fewshot']}",
+        dirpath=log_path,
         filename="{val_loss:.3f}",
         save_top_k=1,
         monitor="val_loss",
@@ -345,7 +349,8 @@ def fine_tune(args, *more):
         # precision=16,
     )
 
-    trainer.fit(task, train_loader, val_loader)
+    if not args["do_test_only"]:
+        trainer.fit(task, train_loader, val_loader)
 
     print("test start...")
     #evaluate model
