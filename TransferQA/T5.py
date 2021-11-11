@@ -329,7 +329,7 @@ def fine_tune(args, *more):
     earlystopping_callback = pl.callbacks.EarlyStopping(
         monitor="val_loss",
         min_delta=0.00,
-        patience=15,
+        patience=8,
         verbose=False,
         mode="min",
     )
