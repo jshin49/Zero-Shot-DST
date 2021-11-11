@@ -91,10 +91,10 @@ def train(args, *more):
                     callbacks=[pl.callbacks.EarlyStopping(monitor='val_loss',min_delta=0.00, patience=8,verbose=False, mode='min')],
                     #gpus=args["GPU"],
                     deterministic=True,
-                    gpus=args["GPU"],
-                    num_nodes=1,
-                    accelerator="ddp",
-                    plugins='ddp_sharded'
+                    # gpus=args["GPU"],
+                    # num_nodes=1,
+                    # accelerator="ddp",
+                    # plugins='ddp_sharded'
                     # precision=16
                     )
 
