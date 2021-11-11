@@ -338,6 +338,7 @@ def fine_tune(args, *more):
         gradient_clip_val=args["max_norm"],
         max_epochs=args["n_epochs"],
         callbacks=callbacks,
+        gpus=1,
         # [pl.callbacks.EarlyStopping(monitor='val_loss',min_delta=0.00, patience=15,verbose=False, mode='min')],
         deterministic=True,
         # precision=16,

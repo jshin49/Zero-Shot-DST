@@ -300,8 +300,8 @@ def read_QA_data(args, path_name, tokenizer):
                     }
                     data.append(data_detail)
 
-    for idx in range(3):
-        print(data[idx])
+    # for idx in range(3):
+    #     print(data[idx])
     return data
 
 
@@ -505,8 +505,8 @@ def read_SGD(args, path_name, tokenizer, dataset="test"):
     # with open(os.path.join("test",f"output.json"), 'w') as fout:
     #     json.dump(all_data, fout, indent=4)
 
-    for idx in range(13):
-        print(p_data[idx])
+    # for idx in range(13):
+    #     print(p_data[idx])
     # print(all_data[2])
     return p_data, all_data
 
