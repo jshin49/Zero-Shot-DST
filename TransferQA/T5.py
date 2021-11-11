@@ -363,7 +363,7 @@ def fine_tune(args, *more):
             checkpoint_path=ckpt_path,
             args=args,
             tokenizer=tokenizer,
-            sum_model=model,
+            model=model,
         )
     #evaluate model
     ratio = "ratio_" + str(args["fewshot"]) + "_seed_" + str(args["seed"]) + "_domain_" + args["only_domain"]
