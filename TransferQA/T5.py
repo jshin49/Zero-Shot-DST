@@ -54,8 +54,8 @@ class DST_Seq2Seq(pl.LightningModule):
     def validation_epoch_end(self, outputs):
         val_loss_mean = sum([o['val_loss'] for o in outputs]) / len(outputs)
         # show val_loss in progress bar but only log val_loss
-        results = {'progress_bar': {'val_loss': val_loss_mean.item()}, 'log': {'val_loss': val_loss_mean.item()},
-                   'val_loss': val_loss_mean.item()}
+        results = {'progress_bar': {'val_loss': val_loss_mean}, 'log': {'val_loss': val_loss_mean},
+                   'val_loss': val_loss_mean}
         return results
 
     def configure_optimizers(self):
