@@ -149,8 +149,8 @@ def read_data(args, path_name, SLOTS, tokenizer, description, dataset=None):
 
 
 
-    for idx in range(10):
-        print(data[idx])
+    # for idx in range(10):
+    #     print(data[idx])
     print("domain_counter", domain_counter)
     return data, slot_temp
 
@@ -214,9 +214,9 @@ def prepare_data(args, tokenizer):
     dev_dataset = DSTDataset(data_dev, args)
     test_dataset = DSTDataset(data_test, args)
 
-    train_loader = DataLoader(train_dataset, batch_size=args["train_batch_size"], shuffle=True, collate_fn=partial(collate_fn, tokenizer=tokenizer), num_workers=16)
-    test_loader = DataLoader(test_dataset, batch_size=args["test_batch_size"], shuffle=False, collate_fn=partial(collate_fn, tokenizer=tokenizer), num_workers=16)
-    dev_loader = DataLoader(dev_dataset, batch_size=args["dev_batch_size"], shuffle=False, collate_fn=partial(collate_fn, tokenizer=tokenizer), num_workers=16)
+    train_loader = DataLoader(train_dataset, batch_size=args["train_batch_size"], shuffle=True, collate_fn=partial(collate_fn, tokenizer=tokenizer))
+    test_loader = DataLoader(test_dataset, batch_size=args["test_batch_size"], shuffle=False, collate_fn=partial(collate_fn, tokenizer=tokenizer))
+    dev_loader = DataLoader(dev_dataset, batch_size=args["dev_batch_size"], shuffle=False, collate_fn=partial(collate_fn, tokenizer=tokenizer))
     domain_data = {}
     return train_loader, dev_loader, test_loader, ALL_SLOTS, domain_data
 
