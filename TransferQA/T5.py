@@ -319,7 +319,7 @@ def fine_tune(args, *more):
     train_loader, val_loader, test_loader, ALL_SLOTS, domain_data = prepare_data(args, tokenizer)
 
     log_path = f"logs/{args['only_domain']}_{args['fewshot']}/seed_{args['seed']}"
-    if not os.path.isdir(log_path):
+    if not os.path.exists(log_path):
         os.mkdir(log_path)
 
     earlystopping_callback = pl.callbacks.EarlyStopping(
